@@ -8,9 +8,9 @@
 
 This node module is designed to make managing subscriptions to eth contract events easy by creating a wrapper around a few web3 functions. In particular this module allows you to perform 3 common actions for a given event you want to monitor:
 
-- Create a subscription and call a callback function every time that event is recieved.
+- Create a subscription and call a callback function every time that event is received.
 - Check periodically for any missed events from historic transactions
-- Set a keep alive monitor to periodically check if events have been recieved recently.
+- Set a keep alive monitor to periodically check if events have been received recently.
 
 ## Usage
 
@@ -63,6 +63,12 @@ If you simply want to subscribe to an event and get them as they happen and don'
 ```
 
 Notice this doesn't pass a callback for changed events. Changed events are emitted when a previous event becomes part of a chain fork and is orphaned.
+
+## Local Testing
+
+You can test locally by using Ganache and Truffle. Run a ganache node and find the ABI of your contract in the build folder after running truffle compile. You can also easily get the ABI using solc if you have the solidity compiler installed locally using:
+
+`solc --abi yourContract.sol`
 
 ## Methods
 
