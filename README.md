@@ -169,7 +169,7 @@ updateEventHistory(
 
 ### keepAlive
 
-Set the keep alive for the events contract. If the contract has not sent an event within the timeout period (specified in millisecond), then the connection will be comepletely reset. The web3 provider will be rotated to the next available one, or the same one if only one. All subscriptions will be unsubscribed, then resubscribed. This is an agressive application level reset, in addition to lower level network reconnect options provided by web3.js. Sometimes this can be required if the node becomes unresponsive while the connection is still alive.
+Set the keep alive for the events contract. If the contract has not sent an event within the timeout period (specified in millisecond), then the connection will be comepletely reset. The web3 provider will be rotated to the next available one, or the same one if only one. All subscriptions will be unsubscribed, then resubscribed. This is an aggressive application level reset, in addition to lower level network reconnect options provided by web3.js. Sometimes this can be required if the node becomes unresponsive while the connection is still alive.
 
 `keepAlive(address, event, timeout)`
 
