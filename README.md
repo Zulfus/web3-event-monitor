@@ -12,6 +12,56 @@ This node module is designed to make managing subscriptions to eth contract even
 - 2. Check periodically for any missed events from historic transactions
 - 3. Set a keep alive monitor to periodically check if events have been recieved recently.
 
+## Usage
+
+First import the module then setup the connection. First get the instance, set the providers and initialise web3.
+
+```
+const SubscribeService = require("subscribe");
+const sub = SubscribeService.getSubscribeInstance();
+sub.setProviders(["ws://127.0.0.1:7545"]);
+sub.initWeb3();
+```
+
+Afterwards the easiest way to use the module is by calling listen() with an object containing your parameters. At a minimum you should subscribe to an event, checking the historic transactions for missed events is optional, as is the keepAlive option. Note that the keepAlive function is very aggressive and will perform a full connection reset, unsubscribing all events even one's that haven't timed out. So may cause you to miss events. Example usage for using all 3 functions, and simply logging events to the console as the callback event to both subscription events and historic events:
+
+```
+
+const SubscribeService = require("subscribe");
+const sub = SubscribeService.getSubscribeInstance();
+sub.setProviders(["ws://127.0.0.1:7545"]);
+sub.initWeb3();
+
+const ABI = ...
+const CONTRACT_ADDRESS = ...
+
+sub.listen({
+    ABI: ABI,
+    address: CONTRACT_ADDRESS,
+    event: "YourEventName",
+    dataCallback: console.log,
+    changedCallback: console.log,
+    updateEventHistoryCallback: console.log,
+    updateEventHistoryTimeout: 5 * 1000,
+    initBlock: 0,
+    keepAliveTimeout: 10 * 1000,
+});
+
+```
+
+If you simply want to subscribe to an event and get them as they happen and don't care about missed events or keepAlive functionality you can just use:
+
+```
+  sub.listen({
+    ABI: ABI,
+    address: CONTRACT_ADDRESS,
+    event: "YourEventName",
+    dataCallback: console.log,
+  });
+```
+
+Notice this doesn't pass a callback for changed events. Changed events are emitted when a previous event becomes part of a chain fork and is orphaned.
+
 ## Methods
 
 ### getSubscriptionInstance
@@ -61,7 +111,7 @@ Creates a contract instance from the provided ABI and contract address. This is 
 A wrapper around subscribeEvent, updateEventHistory and keepAlive to perform 1 to 3 actions for a single subscription. At a minimun a subscribeEvent is created, with updateEventHistory and keepAlive optional. Accepts an object specifying all parameters.
 
 ```
-   listen({
+listen({
     ABI,
     contractAddress,
     eventName,
@@ -81,12 +131,12 @@ Create a subscription to the event at the specified contract. Contract should be
 
 ```
 
-   subscribeEvent(
-contract,
-address,
-event,
-dataCallback = () => {},
-changedCallback = () => {}
+subscribeEvent(
+    contract,
+    address,
+    event,
+    dataCallback = () => {},
+    changedCallback = () => {}
 )
 
 ```
@@ -98,13 +148,13 @@ Checks periodically for events from historic blocks beginning at initBlock (defa
 ```
 
 updateEventHistory(
-event,
-contract,
-address,
-filter = {},
-callbackFunction,
-timeout = 5 _ 60 _ 1000
-initBlock = 0
+    event,
+    contract,
+    address,
+    filter = {},
+    callbackFunction,
+    timeout = 5 _ 60 _ 1000
+    initBlock = 0
 )
 
 ```
@@ -113,7 +163,7 @@ initBlock = 0
 
 Set the keep alive for the events contract. If the contract has not sent an event within the timeout period (specified in millisecond), then the connection will be comepletely reset. The web3 provider will be rotated to the next available one, or the same one if only one. All subscriptions will be unsubscribed, then resubscribed. This is an agressive application level reset, in addition to lower level network reconnect options provided by web3.js. Sometimes this can be required if the node becomes unresponsive while the connection is still alive.
 
-    keepAlive(address, event, timeout)
+`keepAlive(address, event, timeout)`
 
 ### resetConnection
 
