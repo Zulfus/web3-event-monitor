@@ -6,7 +6,7 @@
 
 ## About
 
-This node module is designed to make managing subscriptions to eth contract events easy by creating a wrapping around a few web3 functions. In particular this module allows you to perform 3 common actions for a given event you want to monitor:
+This node module is designed to make managing subscriptions to eth contract events easy by creating a wrapper around a few web3 functions. In particular this module allows you to perform 3 common actions for a given event you want to monitor:
 
 - Create a subscription and call a callback function every time that event is recieved.
 - Check periodically for any missed events from historic transactions
@@ -17,8 +17,8 @@ This node module is designed to make managing subscriptions to eth contract even
 First import the module then setup the connection. First get the instance, set the providers and initialise web3.
 
 ```
-const SubscribeService = require("subscribe");
-const sub = SubscribeService.getSubscribeInstance();
+const SubscribeService = require("web3-event-monitor");
+const sub = SubscribeService.getInstance();
 sub.setProviders(["ws://127.0.0.1:7545"]);
 sub.initWeb3();
 ```
@@ -171,8 +171,4 @@ Set the keep alive for the events contract. If the contract has not sent an even
 
 Performs a full reset of the connection. Rotating the provider if more than one is available. All subscribtions are cancelled, the web3 instance is recreated, then all events are resubscribed. This will cause downtime for all subscriptions and may cause you to miss events, so should ideally be used in conjection with updateEventHistory.
 
-```
-
 `resetConnection()`
-
-```

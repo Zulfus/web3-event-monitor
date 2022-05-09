@@ -21,7 +21,7 @@ class Subscribe {
   unsubscribeMap = new Map();
   clearIntervals = [];
 
-  static getSubscribeInstance() {
+  static getInstance() {
     return instance ? instance : new Subscribe();
   }
 
@@ -67,6 +67,14 @@ class Subscribe {
     }
   }
 
+  createContract(ABI, address) {
+    if (ABI == undefined || address == undefined) {
+      console.log("Please pass correct parameters to createContract");
+      return -1;
+    }
+    return new web3.eth.Contract(ABI, address);
+  }
+
   listen({
     ABI,
     address,
@@ -88,7 +96,7 @@ class Subscribe {
       console.log("Please init web3 first");
       return -2;
     } else {
-      const contract = new web3.eth.Contract(ABI, address);
+      const contract = this.createContract(ABI, address);
       const key = event + " " + address;
 
       this.subscriptionsMap.set(key, [
@@ -117,14 +125,14 @@ class Subscribe {
       }
 
       if (updateEventHistoryCallback != undefined) {
-        this.lastBlockMap.set(key, initBlock);
         this.updateEventHistory(
           event,
           contract,
           address,
           filter,
           updateEventHistoryCallback,
-          updateEventHistoryTimeout
+          updateEventHistoryTimeout,
+          initBlock
         );
       }
     }
@@ -173,7 +181,8 @@ class Subscribe {
     address,
     filter = {},
     callbackFunction,
-    timeout = 5 * 60 * 1000
+    timeout = 5 * 60 * 1000,
+    initBlock = 0
   ) {
     //checks historic events every x mins incase we missed one (network issues etc.) - default: 5 mins
 
@@ -184,7 +193,7 @@ class Subscribe {
       callbackFunction == undefined
     ) {
       console.log("parameters undefined");
-      return;
+      return -1;
     }
 
     if (web3 == null) {
@@ -192,6 +201,8 @@ class Subscribe {
       return -2;
     } else {
       const key = event + " " + address;
+
+      this.lastBlockMap.set(key, initBlock);
 
       const interval = setInterval(() => {
         let options = {
