@@ -29,7 +29,7 @@ Example usage for using all 3 functions, and simply logging events to the consol
 
 ```
 
-const SubscribeService = require("subscribe");
+const SubscribeService = require("web3-event-monitor");
 const sub = SubscribeService.getSubscribeInstance();
 sub.setProviders(["ws://127.0.0.1:7545"]);
 sub.initWeb3();
