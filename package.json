@@ -1,0 +1,20 @@
+{
+  "name": "web3-event-monitor",
+  "version": "1.0.0",
+  "description": "Reliable web3 subscriptions to eth contracts, includes periodic monitoring of past transactions and application level keep alive checks",
+  "main": "src/subscribe.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web3",
+    "eth",
+    "event",
+    "subscription",
+    "reliable",
+    "node",
+    "node.js"
+  ],
+  "author": "Zul Sadiq",
+  "license": "MIT"
+}
