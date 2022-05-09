@@ -1,4 +1,4 @@
-# Web Event Monitor
+# Web3 Event Monitor
 
 ## Install
 
@@ -23,7 +23,9 @@ sub.setProviders(["ws://127.0.0.1:7545"]);
 sub.initWeb3();
 ```
 
-Afterwards the easiest way to use the module is by calling listen() with an object containing your parameters. At a minimum you should subscribe to an event, checking the historic transactions for missed events is optional, as is the keepAlive option. Note that the keepAlive function is very aggressive and will perform a full connection reset, unsubscribing all events even one's that haven't timed out. So may cause you to miss events. Example usage for using all 3 functions, and simply logging events to the console as the callback event to both subscription events and historic events:
+Afterwards the easiest way to use the module is by calling listen() with an object containing your parameters. At a minimum you should subscribe to an event, checking the historic transactions for missed events is optional, as is the keepAlive option. Note that the keepAlive function is very aggressive and will perform a full connection reset, unsubscribing all events even one's that haven't timed out. So may cause you to miss events.
+
+Example usage for using all 3 functions, and simply logging events to the console as the callback event to both subscription events and historic events:
 
 ```
 
