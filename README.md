@@ -8,9 +8,9 @@
 
 This node module is designed to make managing subscriptions to eth contract events easy by creating a wrapping around a few web3 functions. In particular this module allows you to perform 3 common actions for a given event you want to monitor:
 
-- 1 Create a subscription and call a callback function every time that event is recieved.
-- 2 Check periodically for any missed events from historic transactions
-- 3 Set a keep alive monitor to periodically check if events have been recieved recently.
+- Create a subscription and call a callback function every time that event is recieved.
+- Check periodically for any missed events from historic transactions
+- Set a keep alive monitor to periodically check if events have been recieved recently.
 
 ## Usage
 
