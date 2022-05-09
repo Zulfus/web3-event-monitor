@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zulfus/web3-event-monitor.git"
+  },
   "keywords": [
     "web3",
     "eth",
